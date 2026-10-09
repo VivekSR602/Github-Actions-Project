@@ -1,4 +1,4 @@
-name: Build and Save Artifact
+name: Artifact Demo
 
 on:
   workflow_dispatch:
@@ -8,27 +8,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
+      - name: Create File
+        run: echo "Hello World" > sample.txt
 
-      - name: Build Application
-        run: mvn clean package
-
-      - name: Upload JAR Artifact
+      - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: payment-jar
-          path: target/*.jar
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Download Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: payment-jar
-
-      - name: Verify Artifact
-        run: ls -lrt
+          name: sample-file
+          path: sample.txt
